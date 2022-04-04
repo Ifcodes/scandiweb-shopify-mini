@@ -19,7 +19,12 @@ class Dropdown extends Component {
     return (
       <DropdownWrapper showDropdown={this.props.showDropdown} ref={this.props.clickedRef}>
         {this.props.currencySymbols.map((c, index) => (
-          <span key={`key-${index}`}>{c} {this.props.currencyInitial[index]}</span>
+          <span 
+            key={`key-${index}`}
+            onClick={() => this.props.onSelect(c)}
+          >
+            {c} {this.props.currencyInitial[index]}
+          </span>
         ))}
       </DropdownWrapper>
     );

@@ -1,16 +1,20 @@
 import { TabWrapper } from "./TabHeaderStyle";
 import {Component} from 'react'
+import opusClient from '../../Opus'
+import { CATEGORIES } from "../../Opus/queries";
+import allActions from "../../store/Actions";
+import { connect } from "react-redux";
 
 class TabHeader extends Component {
   state = {
-    isSelected: 0
+    activeTab: ''
   }
 
-  handleSelectedTab = (tabIndex) => {
+  handleSelectedTab = (tabName) => {
     this.props.tabs.map((tab, index) => {
-      if(tabIndex === index) this.setState({
-        isSelected : tabIndex
-      })
+      if(tab.name === tabName){
+        this.props.dispatch(allActions.setSelectedCategory(tab.name))
+      }
 
       return tab
     })
@@ -23,10 +27,10 @@ class TabHeader extends Component {
           {this.props.tabs.map((tab, index) => (
             <div
               key={`tab-key-${index}`}
-              className={`${this.state.isSelected === index && 'activeTab'}`}
-              onClick={() => this.handleSelectedTab(index)}
+              className={`${this.props.activeTab === tab.name && 'activeTab'}`}
+              onClick={() => this.handleSelectedTab(tab.name)}
             >
-              <span>{tab}</span>
+              <span>{tab.name}</span>
             </div>
           ))}
         </TabWrapper>
@@ -35,4 +39,10 @@ class TabHeader extends Component {
   }
 }
  
-export default TabHeader;
+function mapStateToProps(state) {
+  const activeTab = state.selectCategory
+  return{
+    activeTab
+  }
+}
+export default connect(mapStateToProps)(TabHeader);

@@ -2,15 +2,19 @@ import { combineReducers } from "redux"
 import { updateCartItemQty } from "./updateCartItemQty"
 import { totalAmount } from "./totalAmount"
 import { productDesc } from "./productDescReducer"
-import { productCategory } from "./productCategory"
+import { categoryNames } from "./productCategory"
 import { cartItemList } from "./data/cartItemList"
-import { productList } from "./data/productList"
+import { selectCategory } from "./selectedCategory"
+import { currencyReducer } from "./selectedCurrency"
 
 export const defaultState = {
   cartList: cartItemList,
-  productList: productList,
+  categories: [],
   totalAmount: 0,
-  singleProduct: {},
+  selectedProduct: {},
+  selectedCategory : "all",
+  selectedCurrency:  '$',
+ 
 }
 
 
@@ -18,7 +22,9 @@ const rootReducer = combineReducers({
   updateCartItemQty,
   totalAmount,
   productDesc,
-  productCategory,
+  categoryNames,
+  selectCategory,
+  currencyReducer,
 })
 
 export default rootReducer

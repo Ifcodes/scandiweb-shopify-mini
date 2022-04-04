@@ -6,6 +6,10 @@ import TabHeader from '../../atoms/TabHeaders';
 import Logo from '../../atoms/Vectors/Logo';
 import { NavWrapper } from './navStyles'
 import Dropdown from '../../atoms/Dropdown';
+import opusClient from '../../Opus'
+import { ALL_CURRENCY, CATEGORIES } from "../../Opus/queries";
+import allActions from "../../store/Actions";
+import { connect } from 'react-redux';
 
 class Nav extends Component {
   constructor(){
@@ -14,23 +18,51 @@ class Nav extends Component {
   }
 
   state = {
-    tabs: ["WOMEN", "MEN", "KIDS"],
-    currencySymbols: ["$", "€", "¥"],
-    currencyInitial: ["USD", "EUR", "JPY"],
+    currencySymbols: [],
+    currencyInitial: [],
     showCurrency: false,
+    selectedCurrency: ''
   }
+
+  async componentDidMount(){
+    const categoryList = await opusClient.post(CATEGORIES)
+
+    this.props.dispatch(allActions.setCategories(categoryList.categories))
+
+    const currency = await opusClient.post(ALL_CURRENCY)
+
+    console.log(currency.currencies)
+
+    const currencySymbols = currency.currencies.map((currency) => currency.symbol)
+
+    const currencyInitial = currency.currencies.map((currency) => currency.label)
+
+    this.setState({
+      currencyInitial,
+      currencySymbols,
+    })
+  }
+
 
   setShowCurrency = (val) => {
     this.setState({showCurrency: val})
   }
 
+  selectCurrency = (sym) => {
+    const selectedCurrency = this.state.currencySymbols.find(c => c === sym)
+    
+    this.props.dispatch(allActions.setSelectedCurrency(selectedCurrency))
+  }
+
   render() { 
+    const tabs = this.props.tabs
+    const selectedCurrency = this.props.currency
     return ( 
       <NavWrapper>
-        <TabHeader tabs={this.state.tabs} />
+        <TabHeader tabs={tabs} />
         <Logo />
         <div className='attribute-cont'>
-          <span>$</span>
+          <span>{selectedCurrency}</span>
           {this.state.showCurrency 
             ? (
             <div onClick={() => this.setShowCurrency(false)} className='arrow'>      
@@ -59,10 +91,20 @@ class Nav extends Component {
           showDropdown={this.state.showCurrency}
           clickedRef={this.clickRef}
           setShowCurrency={this.setShowCurrency}
+          onSelect={this.selectCurrency}
         />
       </NavWrapper>
      );
   }
 }
- 
-export default Nav;
+
+function mapStateToProps(state){
+  const tabs = state.categoryNames
+  const currency = state.currencyReducer
+  return{
+    tabs,
+    currency
+  }
+}
+
+export default connect(mapStateToProps)(Nav);

@@ -1,10 +1,13 @@
 import { defaultState } from ".";
 
-export const productCategory = (state = defaultState.productList, action) =>{
+export const categoryNames = (state = defaultState.categories, action) =>{
   switch(action.type){
-    case 'WOMEN_CATEGORY':
-      const newState = [...state]
-      return newState;
+    case 'CATEGORIES':
+      const newState =  {...defaultState, categories: action.payload.categories}
+
+      const result = newState.categories
+
+      return result;
     default: 
       return state;
   }

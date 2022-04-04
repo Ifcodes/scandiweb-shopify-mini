@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 
 class MainLayout extends Component {
   generatedId = new GenerateId()
+
   constructor(){
     super()
     this.clickedRef = createRef()
@@ -17,10 +18,11 @@ class MainLayout extends Component {
     showModal: false,
   }
 
+
   setShowModal = (val) => {
-    
     this.setState({showModal: val})
   }
+
 
   render() { 
     const cartItems = this.props.cartItems
@@ -47,7 +49,7 @@ class MainLayout extends Component {
 function mapStateToProps(state) {
   const cartItems = state.updateCartItemQty
   return{
-    cartItems
+    cartItems,
   }
 }
 

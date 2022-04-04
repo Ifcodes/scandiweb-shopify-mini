@@ -1,16 +1,11 @@
 import { defaultState } from "."
 
-export const productDesc = (state = defaultState.singleProduct, action) => {
+export const productDesc = (state = defaultState.selectedProduct, action) => {
   switch(action.type){
     case 'SHOW_PRODUCT_DESC':
-      let newState = {...state}
-      defaultState.productList.map((item, indx) => {
-        if(item.productId === action.id){
-          newState = item
-        }
-       return item
-      })
-      return newState;
+      let newState = {...defaultState, selectedProduct: action.payload.product}
+      const result = newState.selectedProduct
+      return result;
     default:
       return state;
   }

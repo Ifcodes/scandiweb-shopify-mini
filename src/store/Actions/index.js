@@ -18,13 +18,38 @@ const addToCart = (newData) => ({
   type: 'ADD_TO_CART'
 })
 
-const womenCategory = () => ({
-  type: 'WOMEN_CATEGORY'
+const setSelectedCategory = (tab) => ({
+  type: 'SELECT_CATEGORY',
+  payload: {
+    tab
+  }
+})
+const setCategories = (categories) => ({
+  type: 'CATEGORIES',
+  payload: {
+    categories
+  }
 })
 
-const showDescription = (id) => ({
-  id,
-  type: 'SHOW_PRODUCT_DESC'
+const setCategoryName = (name) => ({
+  type: 'CATEGORY',
+  payload: {
+    name
+  }
+})
+
+const showDescription = (product) => ({
+  type: 'SHOW_PRODUCT_DESC',
+  payload: {
+    product
+  }
+})
+
+const setSelectedCurrency = (currency) => ({
+  type: 'SELECTED_CURRENCY',
+  payload: {
+    currency
+  }
 })
 
 const allActions = {
@@ -32,8 +57,11 @@ const allActions = {
   minus,
   total,
   addToCart,
-  womenCategory,
-  showDescription
+  setCategories,
+  setCategoryName,
+  showDescription,
+  setSelectedCategory,
+  setSelectedCurrency
 }
 
 export default allActions
