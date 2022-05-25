@@ -14,6 +14,7 @@ class ProductList extends Component {
 
     this.state = {
       category: {},
+      catName: 'All',
       selected: null,
     };
   }
@@ -24,10 +25,11 @@ class ProductList extends Component {
       let allCategory = await opusClient.post(CATEGORY_QUERY(this.props.selectCategory))
   
       this.setState({category: allCategory.category})
-      
+
     } catch (error) {
       console.log(error)
     }
+    
 
   }
 
@@ -55,6 +57,8 @@ class ProductList extends Component {
 
   render() { 
     const products = this.state.category.products || []
+
+ 
     return (
       <MainLayout>
         <h1>{this.state.category.name}</h1>

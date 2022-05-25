@@ -27,7 +27,7 @@ class ProductCard extends Component {
           <img src={this.props.product.gallery[0]} alt="product" className="product-img"/>
           <div>
             <Link to={`/product-desc/${this.props.productId}`}>
-              <span  onClick={() => this.showProductDesc(this.props.productId)}>
+              <span>
                 {this.props.product.brand} {this.props.product.name}
               </span>
             </Link>

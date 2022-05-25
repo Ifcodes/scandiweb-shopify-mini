@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components";
 import AppTheme  from "./styles/AppTheme";
 import App from "./app";
 import GlobalStyles from "./styles/GlobalStyle";
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from "./store/Reducers";
@@ -17,11 +17,11 @@ const renderApp = () => {
     <React.StrictMode>
       <GlobalStyles />
       <ThemeProvider theme={AppTheme}>
-        <BrowserRouter>
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </BrowserRouter>
+        <Provider store={store}>
+          <Router>
+              <App />
+          </Router>
+        </Provider>
       </ThemeProvider>
     </React.StrictMode>, 
       document.getElementById('root')

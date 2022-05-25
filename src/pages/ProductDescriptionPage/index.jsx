@@ -6,11 +6,9 @@ import Sizes from "../../atoms/SizeAttributeIcons";
 import Button from "../../atoms/Button";
 import { connect } from "react-redux";
 import allActions from "../../store/Actions";
-import { GenerateId } from "../../utils/generateId"
 import opusClient from '../../Opus'
 import { PRODUCT_QUERY } from "../../Opus/queries";
-
-const generatedId = new GenerateId()
+import { useParams } from "react-router";
 
 class ProductDescription extends Component {
   constructor(props) {
@@ -18,20 +16,28 @@ class ProductDescription extends Component {
 
     this.state = { 
       selected: 0,
-      product: {},
-      selectedImage: 0
+      product: {
+        gallery:[],
+        brand: '',
+        name: '',
+        attributes: [],
+        description: ''
+      },
+      selectedImage: 0,
+      selectedId: '',
     } 
   }
 
   async componentDidMount(){
     try {
-      
-      const productId = this.props.selectedProduct.product.id;
-      console.log("hello", productId)
 
-      const product = await opusClient.post(PRODUCT_QUERY(productId))
+      const {id} = this.props.match.params
+      console.log(id)
+
+      const product = await opusClient.post(PRODUCT_QUERY(id))
+
       console.log(product)
-      this.setState({product})
+      this.setState({product: product.product})
     } catch (error) {
       console.log(error)
     }
@@ -50,21 +56,20 @@ class ProductDescription extends Component {
   }
 
   render() { 
-    const product = this.props.selectedProduct.product
-    console.log("selectedP:", product)
+    
     const addToCart = (data) => {
       console.log(data)
       this.props.dispatch(allActions.addToCart(data))
     }
 
-    const smallImages = product.gallery
-      ? product.gallery.length > 3
-        ? product.gallery.slice(0, 3)
-        : product.gallery
+    const smallImages = this.state.product.gallery
+      ? this.state.product.gallery.length > 3
+        ? this.state.product.gallery.slice(0, 3)
+        : this.state.product.gallery
       : [];
 
-    const largeImage = product.gallery
-    ? product.gallery[this.state.selectedImage]
+    const largeImage = this.state.product.gallery
+    ? this.state.product.gallery[this.state.selectedImage]
     : "";
 
     return (
@@ -82,17 +87,18 @@ class ProductDescription extends Component {
           </div>
           
           <div className="pdp-cont">
-            <img 
-              src={largeImage} alt="main-img" 
-              className="pdp-main-img"
-            />
+            <div className="pdp-main-img">
+              <img 
+                src={largeImage} alt="main-img"  
+              />
+            </div>
             <div className="desc-cont">
               <div>
-                <h2>{product.brand}</h2>
-                <h3>{product.name}</h3>
+                <h2>{this.state.product.brand}</h2>
+                <h3>{this.state.product.name}</h3>
               </div>
               <div className="size-cont">
-                {product.attributes.map((attribute, index) => (
+                {this.state.product.attributes.map((attribute, index) => (
                   <div 
                     key={`attribute-key-${index}`}
                     style={{marginTop: '1rem'}}
@@ -135,7 +141,7 @@ class ProductDescription extends Component {
                     </div> */}
               <div className="atc-btn-cont">
                 <div onClick={() => addToCart({
-                  productDesc: product,
+                  productDesc: this.state.product,
                   selectedSizes: ['s', 'm'],
                   quantity: 1,
                 })}>
@@ -146,7 +152,7 @@ class ProductDescription extends Component {
                   />
                 </div>
                 <div className="description">
-                  {parse(product.description)}
+                  {parse(this.state.product.description)}
                 </div>
               </div>  
             </div>

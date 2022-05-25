@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const ProductCardWrapper = styled.div`
-  width: 24.125rem;
   height: 27.75rem;
   background-color: white;
   box-shadow: ${props => props.isSelected ? '0px 4px 35px rgba(168, 172, 176, 0.19)' : ''};
@@ -10,9 +9,10 @@ export const ProductCardWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   padding-top: 1rem;
+  object-fit: contain;
 
   .product-img{
-    width: 22.125rem;
+    width: auto;
     height: 20.625rem;
     align-self: center;
   }

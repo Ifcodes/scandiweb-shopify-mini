@@ -6,8 +6,8 @@ export const DropdownWrapper = styled.div`
   box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
   visibility: ${props => props.showDropdown ? 'visible' : 'hidden'};
   position: absolute;
-  top: 4.06rem;
-  right: 0;
+  top: 2.06rem;
+  right: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;

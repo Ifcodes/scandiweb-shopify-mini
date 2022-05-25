@@ -16,6 +16,7 @@ export const PdpWrapper = styled.div`
       width: 4.93rem;
       height: 5rem;
       margin-bottom: 2rem;
+      object-fit: contain;
     }
   }
 
@@ -24,9 +25,15 @@ export const PdpWrapper = styled.div`
     grid-template-columns: repeat(2, 50%);
     margin-left: 2rem;
 
+    img{
+      max-width: 32rem;
+      max-height: 30rem;
+    }
+    
     .pdp-main-img{
-      width: 38.125rem;
-      height: 31.93rem;
+      width: 32rem;
+      height: 32rem;
+      object-fit: contain;
     }
 
     .desc-cont{

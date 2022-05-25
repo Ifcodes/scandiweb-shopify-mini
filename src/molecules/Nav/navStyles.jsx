@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 export const NavWrapper = styled.nav`
-  position: sticky;
+  position: fixed;
   top: 0;
-  width: 80%;
+  width: 100%;
   display: flex ;
   align-items: center;
-  height: 5rem;
+  height: 3rem;
   margin: 0 auto;
-  justify-content: space-between;
+  justify-content: space-around;
   background-color: white;
 
   .attribute-cont{

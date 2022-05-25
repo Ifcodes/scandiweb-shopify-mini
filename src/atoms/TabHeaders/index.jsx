@@ -30,7 +30,7 @@ class TabHeader extends Component {
               className={`${this.props.activeTab === tab.name && 'activeTab'}`}
               onClick={() => this.handleSelectedTab(tab.name)}
             >
-              <span>{tab.name}</span>
+              <span>{`${tab.name[0].toUpperCase()}${tab.name.slice(1)}`}</span>
             </div>
           ))}
         </TabWrapper>
